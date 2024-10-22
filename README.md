@@ -4,7 +4,7 @@ Submitted by: **Muhammad Amir**
 
 This web app: **Weather App**
 
-Time spent: **7** hours spent in total
+Time spent: **9** hours spent in total
 
 ## Required Features
 
