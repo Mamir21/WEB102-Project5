@@ -5,29 +5,51 @@ import SearchFilter from './components/SearchFilter';
 import List from './components/List';
 import { fetchWeatherData } from './api/weatherAPI';
 
+const randomCities = [
+    'New York',
+    'Tokyo',
+    'Paris',
+    'Sydney',
+    'Cape Town',
+    'Buenos Aires'
+]
+
 const App = () => {
     const [weatherData, setWeatherData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [city, setCity] = useState('New York');
+    const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [tempRange, setTempRange] = useState('all');
 
     useEffect(() => {
-        const fetchData = async () => {
+        // Fetch weather data for random cities on initial load
+        const fetchRandomData = async () => {
             try {
-                const data = await fetchWeatherData(city, country);
-                setWeatherData([data]); 
-                setFilteredData([data]);
+                const dataPromises = randomCities.map((city) => fetchWeatherData(city));
+                const dataResults = await Promise.all(dataPromises);
+                setWeatherData(dataResults);
+                setFilteredData(dataResults);
             } catch (error) {
-                console.error('Error fetching weather data:', error);
+                console.error('Error fetching random weather data:', error);
             }
         }
 
-        fetchData();
-    }, [city, country]);
+        fetchRandomData();
+    }, [])
 
-    const handleSearch = (term) => {
-        setCity(term);
+    const handleSearch = async (term) => {
+        if (!term) {
+            // If search term is empty, revert to random weather data
+            setFilteredData(weatherData);
+            return;
+        }
+
+        try {
+            const data = await fetchWeatherData(term, country);
+            setFilteredData([data]);
+        } catch (error) {
+            console.error('Error fetching weather data:', error);
+        }
     }
 
     const handleCountryChange = (countryCode) => {
@@ -70,6 +92,7 @@ const App = () => {
                     </>
                 )}
             </div>
+            <h3>Already Given Locations / Search</h3>
             <List items={filteredData} />
         </div>
     )
