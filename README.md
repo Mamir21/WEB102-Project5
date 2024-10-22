@@ -31,7 +31,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Project5](https://github.com/user-attachments/assets/62d51186-7e3c-441a-8e47-9450f1cd7cca)
 
 GIF created with ...  
 [ScreenToGif](https://www.screentogif.com/) for Windows
